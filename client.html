@@ -1,0 +1,33 @@
+  
+<html>
+  <body>
+      <title>Simple client</title>
+    
+      <script type="text/javascript">
+    
+      var sock = new WebSocket("ws://127.0.0.1:8765/");
+
+      messages = document.createElement('ul');
+            sock.onmessage = function (event) {
+                var messages = document.getElementsByTagName('ul')[0],
+                    message = document.createElement('li'),
+                    content = document.createTextNode(event.data);
+                message.appendChild(content);
+                messages.appendChild(message);
+            };
+            document.body.appendChild(messages);
+
+function sendMessage(){
+    var msg = document.getElementById('message');
+    sock.send(msg.value);
+    msg.value = ''
+}
+
+    
+      </script>
+      <p>
+        <input  type="text" id="message" autocomplete="off">
+        <input class="btn btn-primary" type="submit" id='submit' onclick="sendMessage()" value="Send">
+      </p>
+    </body>
+    </html>
